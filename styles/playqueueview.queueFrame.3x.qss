@@ -1,0 +1,7 @@
+#queueFrame {
+        background-color: #000;
+        border-top: 3px solid #26253c;
+        border-right: 3px solid #6d6d7f;
+        border-bottom: 3px solid #6d6d7f;
+        border-left: 3px solid #26253c;
+}

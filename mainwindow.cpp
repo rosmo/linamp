@@ -134,6 +134,12 @@ MainWindow::~MainWindow()
 
 }
 
+PlaylistModel *MainWindow::playlistModel()
+{
+    return m_playlistModel;
+}
+
+
 void MainWindow::showPlayer()
 {
     viewStack->setCurrentIndex(0);

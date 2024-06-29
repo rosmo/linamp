@@ -1,0 +1,54 @@
+
+QMenu {
+    background-color: transparent;
+    border: 0px;
+    icon-size: 22px 18px;
+    width: 25px;
+}
+
+QMenu.add {
+    background-image: url(":assets/qadd_side.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left;
+}
+
+QMenu.remove {
+    background-image: url(":assets/qrem_side.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left;
+}
+
+QMenu.select {
+    background-image: url(":assets/qsel_side.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left;
+}
+
+QMenu.misc {
+    background-image: url(":assets/qmisc_side.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left;
+}
+
+QMenu.options {
+    background-image: url(":assets/qmisc_side.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left;
+}
+
+QMenu::item {
+    margin-left: 3px;
+    margin-color: red;
+    background-color: transparent;
+    icon-size: 22px 18px;
+    width: 25px;
+    height: 18px;
+}
+
+QPushButton::menu-indicator { image: none; }
+

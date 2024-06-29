@@ -19,6 +19,8 @@ HEADERS = \
     audiosourcefile.h \
     audiosourcewspectrumcapture.h \
     controlbuttonswidget.h \
+    queuecontrolbuttonswidget.h \
+    queuecontrolmenu.h \
     desktopbasewindow.h \
     desktopplayerwindow.h \
     embeddedbasewindow.h \
@@ -26,10 +28,12 @@ HEADERS = \
     filebrowsericonprovider.h \
     mainmenuview.h \
     mainwindow.h \
+    playqueuewindow.h \
     mediaplayer.h \
     playerview.h \
     playlistmodel.h \
     playlistview.h \
+    playqueueview.h \
     scale.h \
     scrolltext.h \
     qmediaplaylist.h \
@@ -48,6 +52,8 @@ SOURCES = main.cpp \
     audiosourcefile.cpp \
     audiosourcewspectrumcapture.cpp \
     controlbuttonswidget.cpp \
+    queuecontrolbuttonswidget.cpp \
+    queuecontrolmenu.cpp \
     desktopbasewindow.cpp \
     desktopplayerwindow.cpp \
     embeddedbasewindow.cpp \
@@ -55,10 +61,12 @@ SOURCES = main.cpp \
     filebrowsericonprovider.cpp \
     mainmenuview.cpp \
     mainwindow.cpp \
+    playqueuewindow.cpp \
     mediaplayer.cpp \
     playerview.cpp \
     playlistmodel.cpp \
     playlistview.cpp \
+    playqueueview.cpp \
     scale.cpp \
     scrolltext.cpp \
     qmediaplaylist.cpp \
@@ -74,12 +82,14 @@ INSTALLS += target
 
 FORMS += \
     controlbuttonswidget.ui \
+    queuecontrolbuttonswidget.ui \
     desktopbasewindow.ui \
     desktopplayerwindow.ui \
     embeddedbasewindow.ui \
     mainmenuview.ui \
     playerview.ui \
     playlistview.ui \
+    playqueueview.ui \
     titlebar.ui
 
 RESOURCES += \

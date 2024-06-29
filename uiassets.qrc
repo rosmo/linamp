@@ -52,6 +52,50 @@
         <file>assets/windowClose.png</file>
         <file>assets/windowMaximize.png</file>
         <file>assets/windowMinimize.png</file>
+        <file>assets/windowMinimize.png</file>
+        <file>assets/posHandle_vert.png</file>
+        <file>assets/posHandle_vert_p.png</file>
+        <file>assets/qadd.png</file>
+        <file>assets/qadd_dir.png</file>
+        <file>assets/qadd_dir_p.png</file>
+        <file>assets/qadd_file.png</file>
+        <file>assets/qadd_file_p.png</file>
+        <file>assets/qadd_side.png</file>
+        <file>assets/qadd_url.png</file>
+        <file>assets/qadd_url_p.png</file>
+        <file>assets/qlistopts.png</file>
+        <file>assets/qlistopts_load_p.png</file>
+        <file>assets/qlistopts_new.png</file>
+        <file>assets/qlistopts_new_p.png</file>
+        <file>assets/qlistopts_save_p.png</file>
+        <file>assets/qmisc.png</file>
+        <file>assets/qmisc_inf.png</file>
+        <file>assets/qmisc_inf_p.png</file>
+        <file>assets/qmisc_opts.png</file>
+        <file>assets/qmisc_opts_p.png</file>
+        <file>assets/qmisc_side.png</file>
+        <file>assets/qmisc_sort.png</file>
+        <file>assets/qmisc_sort_p.png</file>
+        <file>assets/qmiscopts_load.png</file>
+        <file>assets/qmiscopts_save.png</file>
+        <file>assets/qrem.png</file>
+        <file>assets/qrem_all.png</file>
+        <file>assets/qrem_all_p.png</file>
+        <file>assets/qrem_crop.png</file>
+        <file>assets/qrem_crop_p.png</file>
+        <file>assets/qrem_misc.png</file>
+        <file>assets/qrem_misc_p.png</file>
+        <file>assets/qrem_sel.png</file>
+        <file>assets/qrem_sel_p.png</file>
+        <file>assets/qrem_side.png</file>
+        <file>assets/qsel.png</file>
+        <file>assets/qsel_all.png</file>
+        <file>assets/qsel_all_p.png</file>
+        <file>assets/qsel_inv.png</file>
+        <file>assets/qsel_inv_p.png</file>
+        <file>assets/qsel_side.png</file>
+        <file>assets/qsel_zero.png</file>
+        <file>assets/qsel_zero_p.png</file>
         <file>styles/controlbuttonswidget.shuffleButton.4x.qss</file>
         <file>styles/controlbuttonswidget.shuffleButton.1x.qss</file>
         <file>styles/controlbuttonswidget.shuffleButton.2x.qss</file>
@@ -104,6 +148,18 @@
         <file>styles/desktopbasewindow.2x.qss</file>
         <file>styles/desktopbasewindow.3x.qss</file>
         <file>styles/desktopbasewindow.4x.qss</file>
+        <file>styles/playqueueview.scrollBar.1x.qss</file>
+        <file>styles/playqueueview.scrollBar.2x.qss</file>
+        <file>styles/playqueueview.scrollBar.3x.qss</file>
+        <file>styles/playqueueview.scrollBar.4x.qss</file>
+        <file>styles/playqueueview.queueFrame.1x.qss</file>
+        <file>styles/playqueueview.queueFrame.2x.qss</file>
+        <file>styles/playqueueview.queueFrame.3x.qss</file>
+        <file>styles/playqueueview.queueFrame.4x.qss</file>
+        <file>styles/queuecontrolbuttons.menu.1x.qss</file>
+        <file>styles/queuecontrolbuttons.menu.2x.qss</file>
+        <file>styles/queuecontrolbuttons.menu.3x.qss</file>
+        <file>styles/queuecontrolbuttons.menu.4x.qss</file>
         <file>assets/filesIcon.png</file>
         <file>assets/playlistsIcon.png</file>
         <file>assets/spotifyIcon.png</file>

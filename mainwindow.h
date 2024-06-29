@@ -22,6 +22,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    PlaylistModel *playlistModel();
+
     QStackedLayout *viewStack;
 
     PlayerView *player;
