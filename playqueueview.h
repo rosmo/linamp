@@ -46,6 +46,27 @@ public slots:
     void scrollBarMoved(int value);
     void queueListScrolling(int value);
 
+    void addFileClicked();
+    void addUrlClicked();
+    void addDirectoryClicked();
+
+    void removeMiscClicked();
+    void removeAllClicked();
+    void cropClicked();
+    void removeSelectedClicked();
+
+    void selectAllClicked();
+    void selectZeroClicked();
+    void invertSelectClicked();
+
+    void miscOptionsClicked();
+    void fileInformationClicked();
+    void sortListClicked();
+
+    void newListClicked();
+    void saveListClicked();
+    void loadListClicked();
+
 signals:
     void addClicked();
     void removeClicked();

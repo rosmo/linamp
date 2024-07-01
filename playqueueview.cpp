@@ -33,14 +33,16 @@ PlayQueueView::PlayQueueView(QWidget *parent, PlaylistModel *playlistModel, Queu
     setupQueueListUi();
 
     controlButtons = ctlBtns;
+    connect(controlButtons, &QueueControlButtonsWidget::addFileClicked, this, &PlayQueueView::addFileClicked);
+/*
 
     connect(controlButtons, &QueueControlButtonsWidget::addClicked, this, &PlayQueueView::addClicked);
     connect(controlButtons, &QueueControlButtonsWidget::removeClicked, this, &PlayQueueView::removeClicked);
     connect(controlButtons, &QueueControlButtonsWidget::selectClicked, this, &PlayQueueView::selectClicked);
     connect(controlButtons, &QueueControlButtonsWidget::miscClicked, this, &PlayQueueView::miscClicked);
     connect(controlButtons, &QueueControlButtonsWidget::optionsClicked, this, &PlayQueueView::optionsClicked);
-
-    // Connect playlist model to our QTreeView
+*/
+        // Connect playlist model to our QTreeView
     connect(m_playlist, &QMediaPlaylist::currentIndexChanged, this, &PlayQueueView::playlistPositionChanged);
     connect(m_playlist, &QMediaPlaylist::currentSelectionChanged, this, &PlayQueueView::handleSelectionChanged);
     connect(ui->queueList, &QAbstractItemView::clicked, this, &PlayQueueView::handleSongSelected);
@@ -128,7 +130,7 @@ void PlayQueueView::scale()
 void PlayQueueView::queueListScrolling(int value) 
 {
     Q_UNUSED(value);
-    
+
     auto rect = ui->queueList->rect();
     auto bottomIndex = ui->queueList->indexAt(QPoint(rect.left() + 10, rect.bottom() - 10));
     // auto topIndex = ui->queueList->indexAt(QPoint(10, 10));
@@ -192,3 +194,83 @@ void PlayQueueView::handleSongSelected(const QModelIndex &index)
     Q_UNUSED(index);
 }
 
+
+void PlayQueueView::addFileClicked() 
+{
+    printf("Add file\n");
+}
+
+void PlayQueueView::addUrlClicked() 
+{
+
+}
+
+void PlayQueueView::addDirectoryClicked() 
+{
+
+}
+
+void PlayQueueView::removeMiscClicked()
+{
+    
+}
+
+void PlayQueueView::removeAllClicked() 
+{
+    
+}
+
+void PlayQueueView::cropClicked() 
+{
+    
+}
+
+void PlayQueueView::removeSelectedClicked() 
+{
+    
+}
+
+void PlayQueueView::selectAllClicked() 
+{
+    
+}
+
+void PlayQueueView::selectZeroClicked() 
+{
+  
+}
+
+void PlayQueueView::invertSelectClicked() 
+{
+    
+}
+
+void PlayQueueView::miscOptionsClicked() 
+{
+    
+}
+
+void PlayQueueView::fileInformationClicked() 
+{
+    
+}
+
+void PlayQueueView::sortListClicked() 
+{
+    
+}
+
+void PlayQueueView::newListClicked() 
+{
+    
+}
+
+void PlayQueueView::saveListClicked() 
+{
+    
+}
+
+void PlayQueueView::loadListClicked() 
+{
+    
+}

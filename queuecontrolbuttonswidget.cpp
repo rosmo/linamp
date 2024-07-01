@@ -36,6 +36,27 @@ QueueControlButtonsWidget::QueueControlButtonsWidget(QWidget *parent) :
         (*menu)->addAction(*action);
     }
 
+    connect(action("add-file"), &QAction::triggered, this, &QueueControlButtonsWidget::addFileClicked);
+    connect(action("add-directory"), &QAction::triggered, this, &QueueControlButtonsWidget::addDirectoryClicked);
+    connect(action("add-url"), &QAction::triggered, this, &QueueControlButtonsWidget::addUrlClicked);
+
+    connect(action("remove-misc"), &QAction::triggered, this, &QueueControlButtonsWidget::removeMiscClicked);
+    connect(action("remove-all"), &QAction::triggered, this, &QueueControlButtonsWidget::removeAllClicked);
+    connect(action("remove-select"), &QAction::triggered, this, &QueueControlButtonsWidget::removeSelectedClicked);
+    connect(action("remove-crop"), &QAction::triggered, this, &QueueControlButtonsWidget::cropClicked);
+
+    connect(action("select-inverse"), &QAction::triggered, this, &QueueControlButtonsWidget::invertSelectClicked);
+    connect(action("select-zero"), &QAction::triggered, this, &QueueControlButtonsWidget::selectZeroClicked);
+    connect(action("select-all"), &QAction::triggered, this, &QueueControlButtonsWidget::selectAllClicked);
+    
+    connect(action("sort"), &QAction::triggered, this, &QueueControlButtonsWidget::sortListClicked);
+    connect(action("file-information"), &QAction::triggered, this, &QueueControlButtonsWidget::fileInformationClicked);
+    connect(action("options"), &QAction::triggered, this, &QueueControlButtonsWidget::miscOptionsClicked);
+    
+    connect(action("list-new"), &QAction::triggered, this, &QueueControlButtonsWidget::newListClicked);
+    connect(action("list-save"), &QAction::triggered, this, &QueueControlButtonsWidget::saveListClicked);
+    connect(action("list-load"), &QAction::triggered, this, &QueueControlButtonsWidget::loadListClicked);
+    
     addMenu->setStyleSheet(getStylesheet("queuecontrolbuttons.menu"));
     removeMenu->setStyleSheet(getStylesheet("queuecontrolbuttons.menu"));
     selectMenu->setStyleSheet(getStylesheet("queuecontrolbuttons.menu"));
@@ -54,17 +75,30 @@ QueueControlButtonsWidget::QueueControlButtonsWidget(QWidget *parent) :
     ui->miscButton->setPopupMode(QToolButton::InstantPopup);
     ui->optionsButton->setMenu(optionsMenu);
     ui->optionsButton->setPopupMode(QToolButton::InstantPopup);
+}
 
-    connect(ui->addButton, &QToolButton::clicked, this, &QueueControlButtonsWidget::addClicked);
-    connect(ui->removeButton, &QToolButton::clicked, this, &QueueControlButtonsWidget::removeClicked);
-    connect(ui->selectButton, &QToolButton::clicked, this, &QueueControlButtonsWidget::selectClicked);
-    connect(ui->miscButton, &QToolButton::clicked, this, &QueueControlButtonsWidget::miscClicked);
-    connect(ui->optionsButton, &QToolButton::clicked, this, &QueueControlButtonsWidget::optionsClicked);
+void QueueControlButtonsWidget::beepBoop()
+{
+    printf("BEEP BOOP\n");
 }
 
 QueueControlButtonsWidget::~QueueControlButtonsWidget()
 {
     delete ui;
+}
+
+QAction *QueueControlButtonsWidget::action(QString name) 
+{
+    QMapIterator<QString, QueueControlIcon> iter(iconMap);
+    while (iter.hasNext()) {
+        iter.next();
+        QueueControlIcon menuAndAction = iter.value();
+
+        if (menuAndAction.name == name) {
+            return *menuAndAction.action;
+        }
+    }
+    return nullptr;
 }
 
 void QueueControlButtonsWidget::scale()
