@@ -69,12 +69,6 @@ QueueControlButtonsWidget::~QueueControlButtonsWidget()
 
 void QueueControlButtonsWidget::scale()
 {
-    printf("SCALING BUTTONS!\n");
-
-    //QSize iconSize = addMenu->actions().first()->icon().actualSize(QSize(10000, 10000));
-    //printf("Resizing menu to: %d %d", iconSize.width(), iconSize.height() * addMenu->actions().count());
-    //addMenu->resize(iconSize.width(), iconSize.height() * addMenu->actions().count());
-
     ui->addButton->setMaximumWidth(ui->addButton->maximumWidth() * UI_SCALE);
     ui->addButton->setMinimumWidth(ui->addButton->minimumWidth() * UI_SCALE);
     ui->addButton->setMaximumHeight(ui->addButton->maximumHeight() * UI_SCALE);

@@ -42,7 +42,6 @@ QMenu.options {
 
 QMenu::item {
     margin-left: 12px;
-    margin-color: red;
     background-color: transparent;
     icon-size: 88px 72px;
     width: 100px;

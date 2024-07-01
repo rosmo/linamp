@@ -169,7 +169,7 @@ QTreeView::item:selected:active {
 
 QScrollBar:vertical {
 	background-color: #191926;
-	width: 4px;
+	width: 0px;
 }
 
 QScrollBar::handle:vertical {

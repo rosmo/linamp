@@ -9,7 +9,6 @@ QueueControlMenu::QueueControlMenu(QWidget *parent)
 
 void QueueControlMenu::setVisible(bool visible)
 {
-    printf("Changing QueueControlMenu visibility!\n");
     if (visible) {
         if (parentWidget() != nullptr) {
             const QPoint menuTopLeft = pos();

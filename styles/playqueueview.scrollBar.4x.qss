@@ -25,4 +25,5 @@ QSlider::groove:vertical {
         padding-right: -4px;
         padding-bottom: -4px;
         padding-left: -8px;
+        width: 40px;
 }

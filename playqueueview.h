@@ -42,6 +42,9 @@ public slots:
     void removeItem();
     void handleSongSelected(const QModelIndex &index);
     void handleSelectionChanged(int index);
+    void updateScrollBar(int start, int end);
+    void scrollBarMoved(int value);
+    void queueListScrolling(int value);
 
 signals:
     void addClicked();
@@ -59,6 +62,9 @@ private:
 
     void scale();
     void setupQueueListUi();
+
+    int numberOfItems = 5;
+    int scrollBarRange = 0;
 };
 
 #endif // PLAYERQUEUEVIEW_H

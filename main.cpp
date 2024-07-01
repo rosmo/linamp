@@ -62,9 +62,10 @@ int main(int argc, char *argv[])
         playQueueWindow.setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::FramelessWindowHint);
 
         if (!parser.isSet(windowedModeOption)) {
-            playQueueWindow.show();
-        } else {
             playQueueWindow.showFullScreen();
+            
+        } else {
+            playQueueWindow.show();
         }
 
         if (parser.isSet(queueWindowScreenOption)) {

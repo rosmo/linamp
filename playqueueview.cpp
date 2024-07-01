@@ -1,5 +1,6 @@
 #include "playqueueview.h"
 #include "ui_playqueueview.h"
+#include "playlistview.h"
 
 #include "scale.h"
 #include "util.h"
@@ -15,6 +16,7 @@
 #include <QMessageBox>
 #include <QStandardPaths>
 #include <QFontDatabase>
+#include <QScrollBar>
 
 PlayQueueView::PlayQueueView(QWidget *parent, PlaylistModel *playlistModel, QueueControlButtonsWidget *ctlBtns) :
     QWidget(parent),
@@ -22,9 +24,6 @@ PlayQueueView::PlayQueueView(QWidget *parent, PlaylistModel *playlistModel, Queu
 {
     m_playlistModel = playlistModel;
     m_playlist = m_playlistModel->playlist();
-
-    // Load custom fonts
-    QFontDatabase::addApplicationFont(":/assets/bignumbers.ttf");
 
     // Setup UI
     ui->setupUi(this);
@@ -42,20 +41,18 @@ PlayQueueView::PlayQueueView(QWidget *parent, PlaylistModel *playlistModel, Queu
     connect(controlButtons, &QueueControlButtonsWidget::optionsClicked, this, &PlayQueueView::optionsClicked);
 
     // Connect playlist model to our QTreeView
-    connect(m_playlistModel->playlist(), &QMediaPlaylist::currentIndexChanged, this, &PlayQueueView::playlistPositionChanged);
-    connect(ui->queueList, &QAbstractItemView::clicked, this, &PlayQueueView::handleSongSelected);
-    //connect(m_playlist, &QMediaPlaylist::mediaChanged, this, &PlayQueueView::updateTotalDuration);
-    //connect(m_playlist, &QMediaPlaylist::mediaInserted, this, &PlayQueueView::updateTotalDuration);
-    //connect(m_playlist, &QMediaPlaylist::mediaRemoved, this, &PlayQueueView::updateTotalDuration);
+    connect(m_playlist, &QMediaPlaylist::currentIndexChanged, this, &PlayQueueView::playlistPositionChanged);
     connect(m_playlist, &QMediaPlaylist::currentSelectionChanged, this, &PlayQueueView::handleSelectionChanged);
+    connect(ui->queueList, &QAbstractItemView::clicked, this, &PlayQueueView::handleSongSelected);
+    
+    // Handle scrolling
+    connect(ui->scrollBar, &QScrollBar::sliderMoved, this, &PlayQueueView::scrollBarMoved);
+    connect(m_playlist, &QMediaPlaylist::mediaAboutToBeRemoved, this, &PlayQueueView::updateScrollBar);
+    connect(ui->queueList->verticalScrollBar(), &QScrollBar::valueChanged, this, &PlayQueueView::queueListScrolling);
 
-    // connect(controlButtons, &ControlButtonsWidget::playClicked, this, &PlayerView::playClicked);
-
-    // duration slider and label
-    ui->scrollBar->setRange(0, 0);
-    // connect(ui->posBar, &QSlider::sliderMoved, this, &PlayerView::positionChanged);
-
-    // connect(ui->playlistButton, &QCheckBox::clicked, this, &PlayerView::plClicked);
+    // Handle playlist edit to update scrollbar
+    connect(m_playlist, &QMediaPlaylist::mediaAboutToBeInserted, this, &PlayQueueView::updateScrollBar);
+    connect(m_playlist, &QMediaPlaylist::mediaAboutToBeRemoved, this, &PlayQueueView::updateScrollBar);
 }
 
 PlayQueueView::~PlayQueueView()
@@ -102,9 +99,13 @@ void PlayQueueView::setupQueueListUi()
     ui->queueList->setDragDropOverwriteMode(false);
     ui->queueList->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
-    // Disable drag and drop until we enable edit mode
+    // Disable drag and drop
     ui->queueList->setDragEnabled(false);
     ui->queueList->setAcceptDrops(false);
+    
+    // Disable scroll bar as we will be implementing it in another way
+    // ui->queueList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->scrollBar->setRange(0, 0);
 }
 
 void PlayQueueView::scale()
@@ -122,6 +123,39 @@ void PlayQueueView::scale()
     ui->queueFrame->setMaximumSize(ui->queueFrame->maximumSize() * UI_SCALE);
     ui->queueFrame->setMinimumSize(ui->queueFrame->minimumSize() * UI_SCALE);
     ui->queueFrame->setStyleSheet(getStylesheet("playqueueview.queueFrame"));
+}
+
+void PlayQueueView::queueListScrolling(int value) 
+{
+    Q_UNUSED(value);
+    
+    auto rect = ui->queueList->rect();
+    auto bottomIndex = ui->queueList->indexAt(QPoint(rect.left() + 10, rect.bottom() - 10));
+    // auto topIndex = ui->queueList->indexAt(QPoint(10, 10));
+    int scrollBarMax = m_playlistModel->rowCount() - numberOfItems;
+    int bottomItemIndex = bottomIndex.row() - numberOfItems;
+    int scrollBarValue = scrollBarMax - bottomItemIndex - 1;
+    ui->scrollBar->setValue(scrollBarValue);
+}
+
+void PlayQueueView::updateScrollBar(int start, int end)
+{
+    Q_UNUSED(start);
+    Q_UNUSED(end);
+
+    int range = m_playlistModel->rowCount() - numberOfItems;
+    if (range < 0) {
+        range = 0;
+    }
+    ui->scrollBar->setRange(0, range);
+    scrollBarRange = range;
+    ui->scrollBar->setValue(range);
+}
+
+void PlayQueueView::scrollBarMoved(int value)
+{
+    int index = (scrollBarRange - value) + numberOfItems;
+    ui->queueList->scrollTo(m_playlistModel->index(index, 0));
 }
 
 void PlayQueueView::handleSelectionChanged(int index)
@@ -155,6 +189,6 @@ void PlayQueueView::removeItem()
 
 void PlayQueueView::handleSongSelected(const QModelIndex &index)
 {
-    printf("Song selected\n");
+    Q_UNUSED(index);
 }
 
