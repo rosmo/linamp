@@ -28,11 +28,17 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument("url", "The URL(s) to open.");
+    parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
+
+    QCommandLineOption mainWindowScreenOption(QStringList() << "ms" << "main-window-screen",
+            QCoreApplication::translate("main", "Select screen for the main window."),
+            QCoreApplication::translate("main", "screen_number"));
+    parser.addOption(mainWindowScreenOption);
 
     QCommandLineOption showQueueWindowOption(QStringList() << "q" << "queue-window", QCoreApplication::translate("main", "Show playlist queue window"));
     parser.addOption(showQueueWindowOption);
 
-    QCommandLineOption queueWindowScreenOption(QStringList() << "s" << "queue-window-screen",
+    QCommandLineOption queueWindowScreenOption(QStringList() << "qs" << "queue-window-screen",
             QCoreApplication::translate("main", "Select screen for the queue window."),
             QCoreApplication::translate("main", "screen_number"));
     parser.addOption(queueWindowScreenOption);
@@ -56,6 +62,15 @@ int main(int argc, char *argv[])
     }
     #endif
     window.show();
+
+    if (parser.isSet(mainWindowScreenOption)) {
+        QString mainWindowScreenStr = parser.value(mainWindowScreenOption);
+        const int mainWindowScreen = mainWindowScreenStr.toInt();
+        QList<QScreen*> screens = QGuiApplication::screens();
+        QRect mainWindowScreenGeometry = screens[mainWindowScreen]->availableGeometry();
+        window.setScreen(screens[mainWindowScreen]);
+        window.move(mainWindowScreenGeometry.left(), mainWindowScreenGeometry.top());
+    }
 
     PlayQueueWindow playQueueWindow(nullptr, window.playlistModel());
     if (parser.isSet(showQueueWindowOption)) {
