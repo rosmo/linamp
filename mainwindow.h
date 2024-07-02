@@ -14,6 +14,8 @@
 #include "playlistview.h"
 #include "qmediaplaylist.h"
 #include "playlistmodel.h"
+#include "playqueuewindow.h"
+#include "playqueueview.h"
 
 class MainWindow : public QMainWindow
 {
@@ -23,6 +25,7 @@ public:
     ~MainWindow();
 
     PlaylistModel *playlistModel();
+    void setPlayQueueWindow(PlayQueueWindow *playQueueWindow);
 
     QStackedLayout *viewStack;
 
@@ -45,6 +48,7 @@ public slots:
 private:
     QMediaPlaylist *m_playlist = nullptr;
     PlaylistModel *m_playlistModel = nullptr;
+    PlayQueueWindow *m_playQueueWindow = nullptr;
     QProcess *shutdownProcess = nullptr;
     void shutdown();
 

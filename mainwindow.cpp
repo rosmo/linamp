@@ -214,3 +214,11 @@ void MainWindow::open()
         fileSource->addToPlaylist(fileDialog.selectedUrls());
 
 }
+
+void MainWindow::setPlayQueueWindow(PlayQueueWindow *playQueueWindow)
+{
+    m_playQueueWindow = playQueueWindow;
+    connect(m_playQueueWindow->playQueue, &PlayQueueView::showPlaylistRequested, this, &MainWindow::showPlaylist);
+    connect(m_playQueueWindow->playQueue, &PlayQueueView::clearPlaylist, playlist, &PlaylistView::clearPlaylist);
+    connect(m_playQueueWindow->playQueue, &PlayQueueView::songSelected, playlist, &PlaylistView::songSelected);
+}

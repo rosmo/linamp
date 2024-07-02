@@ -33,9 +33,11 @@ private:
     // File browser functions
     void fbCd(QString path);
 
+public slots:
+    void clearPlaylist();
+    
 private slots:
     void playlistPositionChanged(int);
-    void clearPlaylist();
     void removeItem();
     void handleSongSelected(const QModelIndex &index);
     void handleSelectionChanged(int index);

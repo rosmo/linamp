@@ -38,7 +38,7 @@ public:
 
 public slots:
     void playlistPositionChanged(int);
-    void clearPlaylist();
+    void playlistCleared();
     void removeItem();
     void handleSongSelected(const QModelIndex &index);
     void handleSelectionChanged(int index);
@@ -68,11 +68,9 @@ public slots:
     void loadListClicked();
 
 signals:
-    void addClicked();
-    void removeClicked();
-    void selectClicked();
-    void miscClicked();
-    void optionsClicked();
+    void showPlaylistRequested();
+    void clearPlaylist();
+    void songSelected(const QModelIndex &index);
 
 private:
     Ui::PlayQueueView *ui;

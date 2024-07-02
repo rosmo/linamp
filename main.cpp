@@ -58,7 +58,8 @@ int main(int argc, char *argv[])
     window.show();
 
     PlayQueueWindow playQueueWindow(nullptr, window.playlistModel());
-    if (parser.isSet(showQueueWindowOption)) {    
+    if (parser.isSet(showQueueWindowOption)) {
+        window.setPlayQueueWindow(&playQueueWindow);
         playQueueWindow.setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::FramelessWindowHint);
 
         if (!parser.isSet(windowedModeOption)) {

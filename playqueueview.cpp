@@ -34,6 +34,13 @@ PlayQueueView::PlayQueueView(QWidget *parent, PlaylistModel *playlistModel, Queu
 
     controlButtons = ctlBtns;
     connect(controlButtons, &QueueControlButtonsWidget::addFileClicked, this, &PlayQueueView::addFileClicked);
+    connect(controlButtons, &QueueControlButtonsWidget::addDirectoryClicked, this, &PlayQueueView::addDirectoryClicked);
+    connect(controlButtons, &QueueControlButtonsWidget::addUrlClicked, this, &PlayQueueView::addUrlClicked);
+
+    connect(controlButtons, &QueueControlButtonsWidget::removeSelectedClicked, this, &PlayQueueView::removeSelectedClicked);
+    connect(controlButtons, &QueueControlButtonsWidget::cropClicked, this, &PlayQueueView::cropClicked);
+    connect(controlButtons, &QueueControlButtonsWidget::removeAllClicked, this, &PlayQueueView::removeAllClicked);
+
 /*
 
     connect(controlButtons, &QueueControlButtonsWidget::addClicked, this, &PlayQueueView::addClicked);
@@ -45,7 +52,7 @@ PlayQueueView::PlayQueueView(QWidget *parent, PlaylistModel *playlistModel, Queu
         // Connect playlist model to our QTreeView
     connect(m_playlist, &QMediaPlaylist::currentIndexChanged, this, &PlayQueueView::playlistPositionChanged);
     connect(m_playlist, &QMediaPlaylist::currentSelectionChanged, this, &PlayQueueView::handleSelectionChanged);
-    connect(ui->queueList, &QAbstractItemView::clicked, this, &PlayQueueView::handleSongSelected);
+    connect(ui->queueList, &QAbstractItemView::doubleClicked, this, &PlayQueueView::handleSongSelected);
     
     // Handle scrolling
     connect(ui->scrollBar, &QScrollBar::sliderMoved, this, &PlayQueueView::scrollBarMoved);
@@ -100,6 +107,7 @@ void PlayQueueView::setupQueueListUi()
     ui->queueList->setDefaultDropAction(Qt::CopyAction);
     ui->queueList->setDragDropOverwriteMode(false);
     ui->queueList->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
+    ui->queueList->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
 
     // Disable drag and drop
     ui->queueList->setDragEnabled(false);
@@ -178,9 +186,9 @@ void PlayQueueView::playlistPositionChanged(int currentItem)
     }
 }
 
-void PlayQueueView::clearPlaylist()
+void PlayQueueView::playlistCleared()
 {
-    ui->queueList->update(); 
+    ui->queueList->update();
 }
 
 void PlayQueueView::removeItem()
@@ -191,23 +199,22 @@ void PlayQueueView::removeItem()
 
 void PlayQueueView::handleSongSelected(const QModelIndex &index)
 {
-    Q_UNUSED(index);
+    emit songSelected(index);
 }
-
 
 void PlayQueueView::addFileClicked() 
 {
-    printf("Add file\n");
+    emit showPlaylistRequested();
 }
 
 void PlayQueueView::addUrlClicked() 
 {
-
+    emit showPlaylistRequested();
 }
 
 void PlayQueueView::addDirectoryClicked() 
 {
-
+    emit showPlaylistRequested();
 }
 
 void PlayQueueView::removeMiscClicked()
@@ -217,16 +224,33 @@ void PlayQueueView::removeMiscClicked()
 
 void PlayQueueView::removeAllClicked() 
 {
-    
+    emit clearPlaylist();
 }
 
 void PlayQueueView::cropClicked() 
-{
-    
+{   
+    QModelIndex selection = ui->queueList->selectionModel()->currentIndex();
+    printf("Cropping: %d\n", selection.row());
+    for (int i = (m_playlistModel->rowCount() - 1); i >= 0; i--) {
+        if (i > selection.row()) {
+            m_playlistModel->removeRows(i, 1);
+        } else if (i < selection.row()) {
+            m_playlistModel->removeRows(0, 1);
+        }
+    }
 }
 
 void PlayQueueView::removeSelectedClicked() 
 {
+    QModelIndexList selection = ui->queueList->selectionModel()->selectedRows();
+    std::sort(selection.begin(), selection.end(), std::less<QModelIndex>());
+    QListIterator<QModelIndex> iter(selection);
+    iter.toBack();
+    while (iter.hasPrevious()) {
+        QModelIndex item = iter.previous();
+        printf("Item selected: %d\n", item.row());
+        m_playlistModel->removeRows(item.row(), 1);
+    } 
     
 }
 
